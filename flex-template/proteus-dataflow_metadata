@@ -1,0 +1,126 @@
+{
+  "name": "Dataflow Proteus",
+  "description": "A pipeline which reads Kafka messages and writes them to Google BigQuery in Avro format.",
+  "parameters": [
+    {
+      "name": "KafkaSecurityProtocol",
+      "label": "Kafka Security Protocol",
+      "helpText": "Kafka Security Protocol",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "KafkaKrb5FileLocal",
+      "label": "Is Kafka Krb5 File Local",
+      "helpText": "Is Kafka Krb5 File Local",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "KafkaKrb5FileLocalPath",
+      "label": "Kafka Krb5 File Local Path",
+      "helpText": "Kafka Krb5 File Local Path",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "KafkaTrustStoreFileLocal",
+      "label": "Is Kafka Trust Store File Local",
+      "helpText": "Is Kafka Trust Store File Local",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "KafkaTrustStoreFileLocalPath",
+      "label": "Kafka Trust Store Local Path",
+      "helpText": "Kafka Trust Store Local Path",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "KafkaTrustStoreFilePassword",
+      "label": "Kafka Trust Store File Password",
+      "helpText": "Kafka Trust Store File Password",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "KafkaTrustStoreFileType",
+      "label": "Kafka Trust Store File Type",
+      "helpText": "Kafka Trust Store File Type",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "KafkaSourceTopic",
+      "label": "Kafka Source Topic",
+      "helpText": "Kafka Source Topic",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "KafkaSourceBrokers",
+      "label": "Kafka Source Brokers",
+      "helpText": "Kafka Source Brokers",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "KafkaSourceSchemaRegistryUri",
+      "label": "Kafka Source Schema Registry",
+      "helpText": "Kafka Source Schema Registry",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "KafkaSourceGroup",
+      "label": "Kafka Source Group",
+      "helpText": "Kafka Source Group",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "KafkaSourceSaslMechanism",
+      "label": "Kafka Source Sasl Mechanism",
+      "helpText": "Kafka Source Sasl Mechanism",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "KafkaSourceSaslKerberosFileServiceName",
+      "label": "Kafka Source Sasl Kerberos File Service Name",
+      "helpText": "Kafka Source Sasl Kerberos File Service Name",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "KafkaSourceSaslKerberosFileLocal",
+      "label": "Is Kafka Source Sasl Kerberos File Local",
+      "helpText": "Is Kafka Source Sasl Kerberos File Local",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "KafkaSourceSaslKerberosFileLocalPath",
+      "label": "Kafka Source Sasl Kerberos File Local Path",
+      "helpText": "Kafka Source Sasl Kerberos File Local Path",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "KafkaSourceSaslKerberosFilePrincipal",
+      "label": "Kafka Source Sasl Kerberos File Principal",
+      "helpText": "Kafka Source Sasl Kerberos File Principal",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "BigQuerySinkTempLocation",
+      "label": "BigQuery Sink Temp Location",
+      "helpText": "BigQuery Sink Temp Location",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "BigQuerySinkProject",
+      "label": "BigQuery Sink Project",
+      "helpText": "BigQuery Sink Project",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "BigQuerySinkDatasetName",
+      "label": "BigQuery Sink Dataset Name",
+      "helpText": "BigQuery Sink Dataset Name",
+      "paramType": "TEXT"
+    },
+    {
+      "name": "BigQuerySinkTableName",
+      "label": "BigQuery Sink Table Name",
+      "helpText": "BigQuery Sink Table Name",
+      "paramType": "TEXT"
+    }
+  ]
+}

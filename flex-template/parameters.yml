@@ -1,0 +1,32 @@
+--template-file-gcs-location: "gs://proteus-dataflow-dev/DataFlowTempLocation"
+--num-workers: 1
+--max-workers: 1
+--worker-machine-type: n1-standard-2
+--project: clgx-idap-clct-app-dev-d20c
+--region: us-west1
+--service-account-email: tf-clgx-idap-clct-app-dev@clgx-idap-clct-app-dev-d20c.iam.gserviceaccount.com
+--subnetwork: https://www.googleapis.com/compute/v1/projects/clgx-network-nonprd-4dd3/regions/us-west1/subnetworks/clgx-idap-us-w1-app-dev-subnet
+--parameters:
+  stagingLocation: gs://proteus-dataflow-dev/DataFlowTempLocation/staging/
+  tempLocation: gs://proteus-dataflow-dev/DataFlowTempLocation/staging/template_launches/
+  KafkaSecurityProtocol: KafkaSecurityProtocol
+  KafkaKrb5FileLocal: KafkaKrb5FileLocal
+  KafkaKrb5FileLocalPath: KafkaKrb5FileLocalPath
+  KafkaTrustStoreFileLocal: KafkaTrustStoreFileLocal
+  KafkaTrustStoreFileLocalPath: KafkaTrustStoreFileLocalPath
+  KafkaTrustStoreFilePassword: KafkaTrustStoreFilePassword
+  KafkaTrustStoreFileType: KafkaTrustStoreFileType
+  KafkaSourceTopic: KafkaSourceTopic
+  KafkaSourceBrokers: KafkaSourceBrokers
+  KafkaSourceSchemaRegistryUri: KafkaSourceSchemaRegistryUri
+  KafkaSourceGroup: KafkaSourceGroup
+  KafkaSourceBrokerSecure: KafkaSourceBrokerSecure
+  KafkaSourceSaslMechanism: KafkaSourceSaslMechanism
+  KafkaSourceSaslKerberosFileServiceName: KafkaSourceSaslKerberosFileServiceName
+  KafkaSourceSaslKerberosFileLocal: KafkaSourceSaslKerberosFileLocal
+  KafkaSourceSaslKerberosFileLocalPath: KafkaSourceSaslKerberosFileLocalPath
+  KafkaSourceSaslKerberosFilePrincipal: KafkaSourceSaslKerberosFilePrincipal
+  BigQuerySinkTempLocation: BigQuerySinkTempLocation
+  BigQuerySinkProject: clgx-idap-clct-app-dev-d20c
+  BigQuerySinkDatasetName: proteus
+  BigQuerySinkTableName: orders

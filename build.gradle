@@ -1,0 +1,137 @@
+plugins {
+    id 'idea'
+    id 'java-library'
+    id 'maven'
+    id 'maven-publish'
+    id 'java'
+    id "application"
+    id "com.github.johnrengelman.shadow" version "6.1.0"
+}
+
+ext {
+    kafkaVersion = "2.6.0"
+    baseVersion = '1.0.0'
+    avroVersion = "1.10.0"
+    confluentAvroVersion = "5.3.2"
+    apacheBeamVersion = "2.31.0"
+    dataflowSDK = "2.5.0"
+    apacheAvroVersion = "1.9.1"
+    apacheAvroPojoVersion = '0.66.143-SNAPSHOT'
+    guavaVersion = "30.0-jre"
+    lombokVersion = '1.18.10'
+    bigqueryVersion = '1.124.5'
+    storageVersion = '1.113.3'
+    javaMainClass = "com.cloudmgtxclctclctpipeline.proteusdataflow.ProteusDataFlowMain"
+}
+
+application {
+    mainClassName = javaMainClass
+}
+
+group = 'com.cloudmgtxclctclctpipeline.proteusdataflow'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+if (project.hasProperty('artifactRepoUser') &&
+        project.hasProperty('artifactRepoPassword')) {
+    uploadArchives {
+        outputs.upToDateWhen { false }
+        repositories {
+            mavenDeployer {
+                name = "ARTIFACTORY"
+                repository(url: "https://artifactory.solutions.corelogic.com/artifactory/idap_data_pipelines_us-cdp-maven-release-virtual") {
+                    authentication(userName: artifactRepoUser, password: artifactRepoPassword)
+                }
+                snapshotRepository(url: "https://artifactory.solutions.corelogic.com/artifactory/idap_data_pipelines_us-cdp-maven-snapshot-virtual") {
+                    authentication(userName: artifactRepoUser, password: artifactRepoPassword)
+                }
+            }
+        }
+    }
+}
+if (!project.hasProperty("artifactRepoUser") || !project.hasProperty("artifactRepoPassword")) {
+    ext.artifactRepoUser = ""
+    ext.artifactRepoPassword = ""
+
+    if (project.gradle.startParameter.taskNames.contains("uploadArchives")) {
+        throw new Exception("ERROR: Trying to call uploadArchives when nexusUsername and/or nexusPassword properties not defined.")
+    }
+}
+
+repositories {
+    maven { url "https://packages.confluent.io/maven/" }
+    maven { url "https://repo.corelogic.net/nexus/content/groups/m2/" }
+    mavenCentral()
+    maven {
+        url = "https://artifactory.solutions.corelogic.com/artifactory/idap_data_pipelines_us-cdp-maven-release-virtual"
+        credentials(PasswordCredentials) {
+            username "${artifactRepoUser}"
+            password "${artifactRepoPassword}"
+        }
+    }
+    google()
+}
+
+dependencies {
+    api "org.apache.kafka:kafka-clients:${kafkaVersion}"
+    api "org.apache.beam:beam-sdks-java-io-kafka:${apacheBeamVersion}"
+    compile "org.apache.avro:avro:${avroVersion}"
+    compile "org.apache.beam:beam-runners-direct-java:${apacheBeamVersion}"
+    compile "org.apache.beam:beam-runners-google-cloud-dataflow-java:${apacheBeamVersion}"
+    compile "org.apache.beam:beam-sdks-java-core:${apacheBeamVersion}"
+    compile "org.apache.beam:beam-sdks-java-extensions-json-jackson:${apacheBeamVersion}"
+    compile "org.apache.beam:beam-sdks-java-extensions-google-cloud-platform-core:${apacheBeamVersion}"
+    compile "org.apache.beam:beam-sdks-java-io-google-cloud-platform:${apacheBeamVersion}"
+    compile "com.google.cloud.dataflow:google-cloud-dataflow-java-sdk-all:${dataflowSDK}"
+    compile("com.google.cloud:google-cloud-bigquery:${bigqueryVersion}") {
+        exclude group: "com.google.guava"
+    }
+    compile("com.google.cloud:google-cloud-storage:${storageVersion}") {
+        exclude group: "com.google.guava"
+    }
+    compile "com.google.guava:guava:${guavaVersion}"
+    compile "com.google.auto.service:auto-service:1.0-rc5"
+    compile "com.google.api-client:google-api-client:1.31.1"
+    compile "com.google.auth:google-auth-library-credentials:0.22.0"
+    compile 'org.junit.jupiter:junit-jupiter:5.4.2'
+    compile "com.corelogic.idap.avro.pojos:idap-pipeline-avro-pojos:${apacheAvroPojoVersion}"
+
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "com.google.auto.service:auto-service:1.0-rc5"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.18.1'
+
+
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId project.group
+            artifactId project.name
+            version project.version
+
+            from components.java
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.cloudmgtxclctclctpipeline.proteusdataflow.ProteusDataFlowMain'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+shadowJar {
+    zip64 true
+    mergeServiceFiles()
+    archiveFileName = "idap-dataflow-proteus.${extension}"
+    destinationDirectory = file("flex-template/")
+}
+
+tasks.build.dependsOn tasks.shadowJar
+build.dependsOn shadowJar
